@@ -709,6 +709,7 @@ class WP_JSON_Posts {
 			'parent'          => (int) $post['post_parent'],
 			#'post_mime_type' => $post['post_mime_type'],
 			'link'            => get_permalink( $post['ID'] ),
+			'custom_fields'   => get_post_custom( $post['ID'] ), //CAMISARLI FIX: add custom fields to the post response
 		);
 
 		$post_fields_extended = array(
