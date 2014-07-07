@@ -6,6 +6,21 @@ Wordpress boilerplate with Single Page Application architecture and a layer of R
 *Based on the project by Chan Charles SPA WP Theme
 [github.com/chancharles/spa-wp-theme](https://github.com/chancharles/spa-wp-theme)*
 
+Wordpress installed
+-------------------
+
+The folder `/public` is for the wordpress installation, now is the 3.9.1 with two plugins loaded by default:
+
+**WP RESTful JSON API**
+[Plugin Site](https://wordpress.org/plugins/json-rest-api/)
+[Github](https://github.com/WP-API/WP-API)
+
+
+**Custom Post Type UI**
+[Plugin Site](http://wordpress.org/plugins/custom-post-type-ui/)
+[Webdev Studios — Official Site](http://webdevstudios.com/plugin/custom-post-type-ui/)
+
+
 Host custom domain
 ------------------
 
