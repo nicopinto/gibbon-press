@@ -3,9 +3,29 @@ define(['./module'], function (services) {
 
   services.service('PostService', function ($http) {
 
-    this.get = function (callback, id) {
+    var baseURL = '/wp-json/posts';
+
+    function _addPage (url, params) {
+      if (params.page) {
+        if (url.indexOf('?') > -1) {
+          url += '&page=' + params.page;
+        }else{
+          url += '?page=' + params.page;
+        }
+      }
+      return url;
+    }
+
+    this.get = function (callback, params) {
+      var url = baseURL;
+      if (params.id) {
+        url = url + '/' + params.id;
+      }
+
+      url = _addPage(url, params);
+
       $http
-        ({method: 'GET', url: '/wp-json/posts'})
+        ({method: 'GET', url: url})
         .success(function (data, status, headers, config) {
           // this callback will be called asynchronously
           // when the response is available
@@ -17,7 +37,43 @@ define(['./module'], function (services) {
           callback(true, data);
         });
     };
-    
-  });
 
-});
+    this.getByType = function (callback, params) {
+      var url = baseURL;
+      if (params.type) {
+        url = url + '?type=' + params.type;
+      }
+
+      url = _addPage(url, params);
+
+      $http
+        ({method: 'GET', url: url})
+        .success(function (data, status, headers, config) {
+          callback(null, data);
+        })
+        .error(function (data, status, headers, config) {
+          callback(true, data);
+        });
+    };
+
+    this.search = function (callback, params) {
+      var url = baseURL;
+      if (params.term) {
+        url = url + '?filter[s]=' + params.term;
+      }
+
+      url = _addPage(url, params);
+
+      $http
+        ({method: 'GET', url: url})
+        .success(function (data, status, headers, config) {
+          callback(null, data);
+        })
+        .error(function (data, status, headers, config) {
+          callback(true, data);
+        });
+    };
+    
+  }); //service end
+
+}); //module end
