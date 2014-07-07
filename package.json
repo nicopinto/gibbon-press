@@ -1,8 +1,8 @@
 {
-  "name": "theme-name",
+  "name": "redbee-site",
   "version": "0.1.0",
   "main": "app.js",
-  "repository": "https://github.com/user/project",
+  "repository": "https://github.com/mpaoletta/redbee-site",
   "author": "Camisarli Makers",
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -20,6 +20,7 @@
   "dependencies": {
     "requirejs": "~2.1.9",
     "lodash": "~2.2.1",
-    "handlebars": "~1.1.2"
+    "handlebars": "~1.1.2",
+    "angular": "^1.2.19"
   }
 }

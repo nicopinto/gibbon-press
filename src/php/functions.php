@@ -17,9 +17,15 @@ class SinglePageApplicationTheme {
 
   function __construct() {
     if (! is_admin()) {
+      //DEV
       wp_register_script('requirejs-config', get_stylesheet_directory_uri() . '/js/requirejs-config.js', array(), '', true);
-      wp_register_script('requirejs', get_stylesheet_directory_uri() . '/js/lib/require.js', array('requirejs-config'), '', true);
+      wp_register_script('requirejs', get_stylesheet_directory_uri() . '/js/lib/require/require.js', array('requirejs-config'), '', true);
+      //wp_register_script('angular-route', '//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.js', array(), '', true);
       wp_register_script('main', get_stylesheet_directory_uri() . '/js/main.js', array('requirejs'), '', true);
+      
+      //PROD
+      //wp_register_script('main-compiled', get_stylesheet_directory_uri() . '/js/compiled.js', array(), '', true);
+      
       add_action( 'wp_enqueue_scripts', array($this, 'enqueueScript'));
     }
   }

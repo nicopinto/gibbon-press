@@ -23,18 +23,15 @@ module.exports = function (grunt) {
     compass: {
       main: {
         options: {
-          sassDir: 'src/main/scss',
+          sassDir: 'src/scss',
           cssDir: targetDir,
           environment: 'production'
         }
       }
     },
-    qunit: {
-      files: ['src/test/**/*.html']
-    },
     jshint: {
       // define the files to lint
-      files: ['Gruntfile.js', 'src/main/js/app/**/*.js', 'src/test/js/app/**/*.js', 'src/main/js/main.js'],
+      files: ['Gruntfile.js', 'src/basic/js/app/**/*.js', 'src/basic/js/main.js', 'src/angular/js/controllers/*.js', 'src/angular/js/directives/*.js', 'src/angular/js/filters/*.js', 'src/angular/js/services/*.js', 'src/angular/js/*.js'],
       // configure JSHint (documented at http://www.jshint.com/docs/)
       options: {
         // more options here if you want to override JSHint defaults
@@ -47,45 +44,100 @@ module.exports = function (grunt) {
     },
     watch: {
       files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
+      tasks: ['jshint', 'copy:angular']
     },
     copy: {
-      main: {
-        /*
-         * expand is required for the expanded options (cwd, src, dest)
-         * http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically
-         */
-        dot: true,
-        expand: true,
-        cwd: 'src/main/php/',
-        src: '**',
-        dest: targetDir + '/',
-      },
-      js: {
-        expand: true,
-        cwd: 'src/main/js/',
-        src: '**',
-        dest: targetDir + '/js/'
-      },
-      lib: {
+      //files for wordpress theme
+      theme: {
         files: [
+          // includes files within path
+          {
+            expand: true,
+            cwd: 'src/php/',
+            src: ['**.php'],
+            dest: targetDir + '/',
+            filter: 'isFile'
+          }
+        ]
+      },
+      //javascript files for a basic require architecture
+      basic: {
+
+        files: [
+          //custom theme php files for basic wordpress
+          {
+            expand: true,
+            cwd: 'src/basic/php/',
+            src: ['**/*.php'],
+            dest: targetDir + '/'
+          },
+          // includes files within path and its sub-directories
+          {
+            expand: true,
+            cwd: 'src/basic/js/',
+            src: ['**/*.js'],
+            dest: targetDir + '/js/'
+          },
+
+          //libs
           {
             src: [ 'node_modules/lodash/lodash.js' ],
             dest: targetDir + '/js/lib/lodash.js'
           },
           {
             src: [ 'node_modules/requirejs/require.js' ],
-            dest: targetDir + '/js/lib/require.js'
+            dest: targetDir + '/js/lib/require/require.js'
           },
           {
             src: [ 'node_modules/handlebars/dist/handlebars.runtime.js' ],
             dest: targetDir + '/js/lib/handlebars.runtime.js'
           }
         ]
+
+      },
+      //javascript files for a angular with require architecture
+      angular: {
+
+        files: [
+          //custom theme php files for angular
+          {
+            expand: true,
+            cwd: 'src/angular/php/',
+            src: ['**/*.php'],
+            dest: targetDir + '/'
+          },
+
+          // includes files within path and its sub-directories
+          {
+            expand: true,
+            cwd: 'src/angular/js/',
+            src: ['**/*.js'],
+            dest: targetDir + '/js/'
+          },
+
+          //html partial templates
+          {
+            expand: true,
+            cwd: 'src/angular/partials/',
+            src: ['**/*.html'],
+            dest: targetDir + '/js/partials/'
+          },
+
+          //libs
+          {
+            src: [ 'node_modules/requirejs/require.js' ],
+            dest: targetDir + '/js/lib/require/require.js'
+          },
+          {
+            src: [ 'node_modules/angular/lib/angular.js' ],
+            dest: targetDir + '/js/lib/angular.js'
+          }
+        ]
+
       }
     },
     clean: {
-      main: [ "target" ]
+      main: [ targetDir ]
     },
     handlebars: {
       options: {
@@ -98,7 +150,7 @@ module.exports = function (grunt) {
       main: {
         files: [
           {
-            src: [ 'src/main/hbs/**/*.hbs' ],
+            src: [ 'src/basic/hbs/**/*.hbs' ],
             dest: targetDir + '/js/hbs/Templates.js'
           }
         ]
@@ -106,19 +158,21 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
 
   // this would be run by typing "grunt test" on the command line
-  grunt.registerTask('test', ['jshint', 'qunit']);
+  grunt.registerTask('test', ['jshint']);
 
   // the default task can be run just by typing "grunt" on the command line
-  grunt.registerTask('default', ['jshint', 'compass', 'handlebars', 'copy', 'requirejs', 'qunit']);
+  grunt.registerTask('default', ['clean', 'compass', 'copy:theme', 'jshint', 'copy:basic', 'handlebars', 'requirejs']);
+
+  // the default task can be run just by typing "grunt" on the command line
+  grunt.registerTask('angular', ['clean', 'compass', 'copy:theme', 'jshint', 'copy:angular', 'requirejs']);
 
 };
