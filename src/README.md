@@ -1,17 +1,25 @@
 SRC > Different types of builds
 ===============================
 
-Basic APP
----------
+Angular APP
+-----------
 
 With executing `grunt` will load this folder for the new theme.
+
+It has a basic **angularjs** structure.
+
+
+Require APP
+-----------
+
+With executing `grunt reqjs` will load this folder for the new theme.
 
 It has **requirejs** with **handlebars**.
 
 
-Angular APP
------------
+Angular + Require APP
+---------------------
 
-With executing `grunt angular` will load this folder for the new theme.
+With executing `grunt ngreqjs` will load this folder for the new theme.
 
 It has **requirejs** with **angularjs** structure.

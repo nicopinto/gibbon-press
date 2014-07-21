@@ -1,0 +1,20 @@
+#menu-posts,
+#menu-pages,
+#menu-comments,
+#menu-media,
+#menu-plugins,
+#menu-tools {
+  display: none!important;
+}
+
+#menu-settings {
+  ul {
+    li {
+      display: none;
+
+      &:nth-child(2) {
+        display: block;
+      }
+    }
+  }
+}

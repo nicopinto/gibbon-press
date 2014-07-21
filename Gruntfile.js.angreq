@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: pkg,
-    /*requirejs: {
+    requirejs: {
       main: {
         options: {
           findNestedDependencies: true,
@@ -19,11 +19,11 @@ module.exports = function (grunt) {
           //optimize: 'none'
         }
       }
-    },*/
+    },
     compass: {
       main: {
         options: {
-          sassDir: 'src/_scss',
+          sassDir: 'src/scss',
           cssDir: targetDir,
           environment: 'production'
         }
@@ -31,7 +31,7 @@ module.exports = function (grunt) {
     },
     jshint: {
       // define the files to lint
-      files: ['src/angular/js/app.js', 'src/angular/js/controllers/*.js', 'src/angular/js/directives/*.js', 'src/angular/js/filters/*.js', 'src/angular/js/services/*.js'],
+      files: ['Gruntfile.js', /* 'src/basic/js/app/* /*.js', 'src/basic/js/main.js'*/'src/angular/js/controllers/*.js', 'src/angular/js/directives/*.js', 'src/angular/js/filters/*.js', 'src/angular/js/services/*.js', 'src/angular/js/*.js'],
       // configure JSHint (documented at http://www.jshint.com/docs/)
       options: {
         // more options here if you want to override JSHint defaults
@@ -42,41 +42,17 @@ module.exports = function (grunt) {
         }
       }
     },
-
-    uglify: {
-      options: {
-        mangle: false,
-        compress: {
-          drop_console: true
-        }
-      },
-      lib: {
-        files: [{
-          expand: true,
-          cwd: 'src/js',
-          src: '**/*.js',
-          dest: targetDir + '/js/libs.min.js'
-        }]
-      },
-      angular: {
-        files: {
-          src: ['<%= jshint.files %>'],
-          dest: targetDir + '/js/ng-app.min.js'
-        }
-      }
-    },
-
     watch: {
       js: {
-        files: ['Gruntfile.js', '<%= jshint.files %>', 'src/angular/php/*.php', 'src/angular/partials/*.html'],
+        files: ['<%= jshint.files %>', 'src/angular/php/*.php', 'src/angular/partials/*.html'],
         tasks: ['jshint', 'copy:angular']
       },
       php: {
-        files: ['src/_php/*.php'],
+        files: ['src/php/*.php'],
         tasks: ['copy:theme']
       },
       scss: {
-        files: ['src/_scss/*.scss', 'src/_scss/**/*.scss'],
+        files: ['src/scss/*.scss', 'src/scss/**/*.scss'],
         tasks: ['compass' ]
       }
     },
@@ -86,14 +62,14 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'src/_assets/fonts/',
+            cwd: 'src/fonts/',
             src: ['**.*'],
             dest: targetDir + '/fonts/',
             filter: 'isFile'
           },
           {
             expand: true,
-            cwd: 'src/_assets/img/',
+            cwd: 'src/img/',
             src: ['**.*'],
             dest: targetDir + '/img/',
             filter: 'isFile'
@@ -106,7 +82,7 @@ module.exports = function (grunt) {
           // includes files within path
           {
             expand: true,
-            cwd: 'src/_php/',
+            cwd: 'src/php/',
             src: ['**.php'],
             dest: targetDir + '/',
             filter: 'isFile'
@@ -218,17 +194,16 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // this would be run by typing "grunt test" on the command line
   grunt.registerTask('test', ['jshint']);
 
   // the default task can be run just by typing "grunt" on the command line
   //grunt.registerTask('default', ['clean', 'compass', 'copy:theme', 'jshint', 'copy:basic', 'handlebars', 'requirejs']);  
-  //grunt.registerTask('basic', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'handlebars']);
+  grunt.registerTask('basic', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'handlebars', 'requirejs']);
 
   // the default task can be run just by typing "grunt" on the command line
-  grunt.registerTask('default', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:angular']);
-  //grunt.registerTask('angular', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:angular', 'uglify']);
+  grunt.registerTask('default', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:angular', 'requirejs']);
+  grunt.registerTask('angular', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:angular', 'requirejs']);
 
 };

@@ -1,9 +1,9 @@
 {
-  "name": "redbee-site",
+  "name": "theme-name",
   "version": "0.1.0",
   "main": "app.js",
-  "repository": "https://github.com/mpaoletta/redbee-site",
-  "author": "Camisarli Makers",
+  "repository": "https://github.com/nicopinto/wp-spa-boilerplate",
+  "author": "Nico Pinto",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.1",
@@ -15,7 +15,8 @@
     "grunt-contrib-compass": "~0.6.0",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-handlebars": "~0.6.0"
+    "grunt-contrib-handlebars": "~0.6.0",
+    "grunt-contrib-uglify": "^0.5.0"
   },
   "dependencies": {
     "requirejs": "~2.1.9",

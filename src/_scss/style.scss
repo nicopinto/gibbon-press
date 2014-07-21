@@ -1,0 +1,40 @@
+/*!
+Theme Name: RedBee 2.0
+Author: Camisarli Makers
+Description: Customized theme for RedBee
+Version: 1.0
+Text Domain: redbee-site
+Tags:
+
+The "!" at the beginning of the file makes sure that Compass will leave
+this comment block intact.
+*/
+
+// Extension
+@import 'compass/reset';
+@import 'compass/css3';
+
+// Settings & Mixins
+@import 'settings';
+@import 'mixins';
+
+// Fonts
+@import 'fonts';
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700);
+
+// Mapbox
+@import url(https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css);
+
+// Slick
+@import url(//cdn.jsdelivr.net/jquery.slick/1.3.6/slick.css);
+
+//views
+@import 'small/small';
+
+@media(min-width: $medium-breakpoint) {
+  @import 'medium/medium';
+}
+
+@media(min-width: $large-breakpoint) {
+  @import 'large/large';
+}
