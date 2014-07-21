@@ -86,17 +86,9 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'src/_assets/fonts/',
-            src: ['**.*'],
-            dest: targetDir + '/fonts/',
-            filter: 'isFile'
-          },
-          {
-            expand: true,
-            cwd: 'src/_assets/img/',
-            src: ['**.*'],
-            dest: targetDir + '/img/',
-            filter: 'isFile'
+            cwd: 'src/_assets/',
+            src: ['**/**.*'],
+            dest: targetDir
           }
         ]
       },
