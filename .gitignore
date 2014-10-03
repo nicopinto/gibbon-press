@@ -1,5 +1,7 @@
 node_modules
 public/wp-content/themes/theme-name
+public
+!public/readme.md
 .DS_Store
 .idea
 .sass-cache
