@@ -2,8 +2,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'views/header',
-    'views/footer',
+    'app/views/partials/header',
+    'app/views/partials/footer',
     'config'
 ], function($, _, Backbone, HeaderView, FooterView, Config) {
 
@@ -18,6 +18,10 @@ define([
             //TODO: hookear vista al index.php principal
 
             //TODO: fetch de los posts para la seccion de blog (deberia estar en otra vista principal separada)
+            this.render();
+        },
+        render: function() {
+            this.$el.html('<h1>contenido insertado por el render del MainPageView.</h1>');
         }
 
     });

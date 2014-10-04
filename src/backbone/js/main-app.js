@@ -4,7 +4,7 @@
 * (think about it as a document.ready for jQuery)
 */
 define([
-  'views/main'
+  'app/views/main'
 ], function ( MainPageView ) {
 	
   var initialize = function () {

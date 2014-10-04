@@ -3,7 +3,7 @@ define([
     'jquery.transit',
     'underscore',
     'backbone',
-    'text!app/templates/menu.html'
+    'text!templates/menu.html'
 ], function($, $transition, _, Backbone, MenuTpl) {
 
     var Menu = Backbone.View.extend({

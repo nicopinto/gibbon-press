@@ -1,17 +1,17 @@
 define([
     'underscore',
     'backbone',
-    'text!app/templates/content/aside.html',
-    'text!app/templates/content/audio.html',
-    'text!app/templates/content/featured-post.html',
-    'text!app/templates/content/gallery.html',
-    'text!app/templates/content/image.html',
-    'text!app/templates/content/link.html',
-    'text!app/templates/content/none.html',
-    'text!app/templates/content/page.html',
-    'text!app/templates/content/post.html',
-    'text!app/templates/content/quote.html',
-    'text!app/templates/content/video.html',
+    'text!templates/content/aside.html',
+    'text!templates/content/audio.html',
+    'text!templates/content/featured-post.html',
+    'text!templates/content/gallery.html',
+    'text!templates/content/image.html',
+    'text!templates/content/link.html',
+    'text!templates/content/none.html',
+    'text!templates/content/page.html',
+    'text!templates/content/post.html',
+    'text!templates/content/quote.html',
+    'text!templates/content/video.html',
 ], function(_, Backbone, AsideTpl, AudioTpl, FeaturedPostTpl, GalleryTpl, ImageTpl, LinkTpl, NoneTpl, PageTpl, PostTpl, QuoteTpl, VideoTpl) {
 
     var ContentModel = Backbone.Model.extend({

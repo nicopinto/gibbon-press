@@ -8,50 +8,71 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: pkg,
-    requirejs: {
+    /*requirejs: {
       main: {
         options: {
           findNestedDependencies: true,
-          mainConfigFile: targetDir + '/js/' + pkg.main,
+          mainConfigFile: targetDir + '/js/main.js',
           baseUrl: targetDir + '/js',
-          include: ['/libs/require.js'],
           name: 'main',
           out: targetDir + '/js/compiled.js'
           //optimize: 'none'
         }
       }
-    },
+    },*/
     compass: {
       main: {
         options: {
           sassDir: 'src/_scss',
           cssDir: targetDir,
-          environment: 'development'
+          environment: 'production'
         }
       }
     },
     jshint: {
       // define the files to lint
-      files: ['Gruntfile.js', 'src/backbone/js/**/*.js', '!src/backbone/js/libs/**/*.js'],
+      files: ['src/angular/js/app.js', 'src/angular/js/controllers/*.js', 'src/angular/js/directives/*.js', 'src/angular/js/filters/*.js', 'src/angular/js/services/*.js'],
       // configure JSHint (documented at http://www.jshint.com/docs/)
       options: {
         // more options here if you want to override JSHint defaults
         globals: {
           jQuery: true,
-          _: true,
-          Backbone: true,
           console: true,
           module: true
         }
       }
     },
+
+    uglify: {
+      options: {
+        mangle: false,
+        compress: {
+          drop_console: true
+        }
+      },
+      lib: {
+        files: [{
+          expand: true,
+          cwd: 'src/js',
+          src: '**/*.js',
+          dest: targetDir + '/js/libs.min.js'
+        }]
+      },
+      angular: {
+        files: {
+          src: ['<%= jshint.files %>'],
+          dest: targetDir + '/js/ng-app.min.js'
+        }
+      }
+    },
+
     watch: {
       js: {
-        files: ['<%= jshint.files %>', 'src/backbone/php/*.php', 'src/backbone/partials/**/*.html'],
-        tasks: ['copy:backbone']
+        files: ['Gruntfile.js', '<%= jshint.files %>', 'src/angular/php/*.php', 'src/angular/partials/*.html'],
+        tasks: ['jshint', 'copy:angular']
       },
       php: {
-        files: ['src/php/*.php'],
+        files: ['src/_php/*.php'],
         tasks: ['copy:theme']
       },
       scss: {
@@ -65,17 +86,9 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'src/_assets/fonts/',
-            src: ['**.*'],
-            dest: targetDir + '/fonts/',
-            filter: 'isFile'
-          },
-          {
-            expand: true,
-            cwd: 'src/_assets/img/',
-            src: ['**.*'],
-            dest: targetDir + '/img/',
-            filter: 'isFile'
+            cwd: 'src/_assets/',
+            src: ['**/**.*'],
+            dest: targetDir
           }
         ]
       },
@@ -85,7 +98,7 @@ module.exports = function (grunt) {
           // includes files within path
           {
             expand: true,
-            cwd: 'src/php/',
+            cwd: 'src/_php/',
             src: ['**.php'],
             dest: targetDir + '/',
             filter: 'isFile'
@@ -113,25 +126,28 @@ module.exports = function (grunt) {
 
           //libs
           {
-            src: [ 'node_modules/requirejs/require.js' ],
-            dest: targetDir + '/js/libs/require.js'
+            src: [ 'node_modules/lodash/lodash.js' ],
+            dest: targetDir + '/js/lib/lodash.js'
           },
           {
-            cwd: 'node_modules/jquery/dist/',
-            src: [ 'jquery.*' ],
-            dest: targetDir + '/js/libs/'
+            src: [ 'node_modules/requirejs/require.js' ],
+            dest: targetDir + '/js/lib/require/require.js'
+          },
+          {
+            src: [ 'node_modules/handlebars/dist/handlebars.runtime.js' ],
+            dest: targetDir + '/js/lib/handlebars.runtime.js'
           }
         ]
 
       },
       //javascript files for a angular with require architecture
-      backbone: {
+      angular: {
 
         files: [
           //custom theme php files for angular
           {
             expand: true,
-            cwd: 'src/backbone/php/',
+            cwd: 'src/angular/php/',
             src: ['**/*.php'],
             dest: targetDir + '/'
           },
@@ -139,7 +155,7 @@ module.exports = function (grunt) {
           // includes files within path and its sub-directories
           {
             expand: true,
-            cwd: 'src/backbone/js/',
+            cwd: 'src/angular/js/',
             src: ['**/*.js'],
             dest: targetDir + '/js/'
           },
@@ -147,33 +163,19 @@ module.exports = function (grunt) {
           //html partial templates
           {
             expand: true,
-            cwd: 'src/backbone/partials/',
+            cwd: 'src/angular/partials/',
             src: ['**/*.html'],
-            dest: targetDir + '/js/templates/'
+            dest: targetDir + '/js/partials/'
           },
 
           //libs
           {
             src: [ 'node_modules/requirejs/require.js' ],
-            dest: targetDir + '/js/libs/require.js'
+            dest: targetDir + '/js/lib/require/require.js'
           },
           {
-            expand: true,
-            cwd: 'node_modules/jquery/dist/',
-            src: [ '*.js', '*.map' ],
-            dest: targetDir + '/js/libs/jquery/'
-          },
-          {
-            expand: true,
-            cwd: 'node_modules/backbone/',
-            src: [ 'backbone*.js', '*.map' ],
-            dest: targetDir + '/js/libs/backbone/'
-          },
-          {
-            expand: true,
-            cwd: 'node_modules/underscore/',
-            src: [ 'underscore*.js' ],
-            dest: targetDir + '/js/libs/underscore/'
+            src: [ 'node_modules/angular/lib/angular.js' ],
+            dest: targetDir + '/js/lib/angular.js'
           }
         ]
 
@@ -181,6 +183,23 @@ module.exports = function (grunt) {
     },
     clean: {
       main: [ targetDir ]
+    },
+    handlebars: {
+      options: {
+        amd: true,
+        namespace: pkg.name + '.Templates',
+        processName: function (filePath) {
+          return filePath.replace(/^src\/main\/hbs\//, '').replace(/\.hbs$/, '');
+        }
+      },
+      main: {
+        files: [
+          {
+            src: [ 'src/basic/hbs/**/*.hbs' ],
+            dest: targetDir + '/js/hbs/Templates.js'
+          }
+        ]
+      }
     }
   });
 
@@ -190,16 +209,18 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // this would be run by typing "grunt test" on the command line
   grunt.registerTask('test', ['jshint']);
 
   // the default task can be run just by typing "grunt" on the command line
-  //grunt.registerTask('basic', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'requirejs']);
+  //grunt.registerTask('default', ['clean', 'compass', 'copy:theme', 'jshint', 'copy:basic', 'handlebars', 'requirejs']);  
+  //grunt.registerTask('basic', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'handlebars']);
 
   // the default task can be run just by typing "grunt" on the command line
-  grunt.registerTask('default', ['clean', 'compass', 'copy:assets', 'copy:theme', 'copy:backbone']);
-  grunt.registerTask('backbone', ['clean', 'compass', 'copy:assets', 'copy:theme', 'copy:backbone']);
-  grunt.registerTask('build', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:backbone', 'requirejs']);
+  grunt.registerTask('default', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:angular']);
+  //grunt.registerTask('angular', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:angular', 'uglify']);
 
 };

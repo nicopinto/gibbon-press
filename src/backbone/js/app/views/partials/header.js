@@ -3,7 +3,7 @@ define([
     'jquery.transit',
     'underscore',
     'backbone',
-    'text!app/templates/header.html'
+    'text!templates/header.html'
 ], function($, $transition, _, Backbone, HeaderTpl) {
 
     var Header = Backbone.View.extend({

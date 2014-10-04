@@ -3,7 +3,7 @@ define([
     'jquery.transit',
     'underscore',
     'backbone',
-    'text!app/templates/footer.html'
+    'text!templates/footer.html'
 ], function($, $transition, _, Backbone, FooterTpl) {
 
     var FooterView = Backbone.View.extend({
