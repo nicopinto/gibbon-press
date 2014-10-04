@@ -194,12 +194,11 @@ module.exports = function (grunt) {
   // this would be run by typing "grunt test" on the command line
   grunt.registerTask('test', ['jshint']);
 
-  // the default task can be run just by typing "grunt" on the command line
-  //grunt.registerTask('basic', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'requirejs']);
-
-  // the default task can be run just by typing "grunt" on the command line
-  grunt.registerTask('default', ['clean', 'compass', 'copy:assets', 'copy:theme', 'copy:backbone']);
+  grunt.registerTask('basic', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'requirejs']);
   grunt.registerTask('backbone', ['clean', 'compass', 'copy:assets', 'copy:theme', 'copy:backbone']);
   grunt.registerTask('build', ['clean', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:backbone', 'requirejs']);
+
+  // the default task can be run just by typing "grunt" on the command line
+  grunt.registerTask('default', ['backbone']);
 
 };

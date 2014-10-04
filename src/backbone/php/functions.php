@@ -26,7 +26,7 @@ class SinglePageApplicationTheme {
       wp_register_script( 'main-dev', get_template_directory_uri() . '/js/main.js', array( 'require-js' ), '', true);
       
       //PROD
-      //wp_register_script('main-prod', get_template_directory_uri() . '/js/compiled.js', array(), '', true);
+      wp_register_script('main-prod', get_template_directory_uri() . '/js/compiled.js', array(), '', true);
       
       add_action( 'wp_enqueue_scripts', array($this, 'enqueueScript'));
     }else {
