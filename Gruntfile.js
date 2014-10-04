@@ -51,8 +51,8 @@ module.exports = function (grunt) {
         tasks: ['copy:backbone']
       },
       php: {
-        files: ['src/php/*.php'],
-        tasks: ['copy:theme']
+        files: ['src/_php/*.php'],
+        tasks: ['copy:theme', 'copy:backbone']
       },
       scss: {
         files: ['src/_scss/*.scss', 'src/_scss/**/*.scss'],
@@ -85,7 +85,7 @@ module.exports = function (grunt) {
           // includes files within path
           {
             expand: true,
-            cwd: 'src/php/',
+            cwd: 'src/_php/',
             src: ['**.php'],
             dest: targetDir + '/',
             filter: 'isFile'

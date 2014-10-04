@@ -2,13 +2,15 @@
 
 <?php if (is_home()) { ?>
 
-<div id="mainContainer"></div>
+<header id="mainHeader"></header>
+
+<section id="mainContent"></section>
 
 <?php
-
-get_footer();
 
 } else {
     get_template_part( '404' );
     die();
 }
+
+get_footer();

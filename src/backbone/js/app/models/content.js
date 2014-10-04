@@ -20,37 +20,37 @@ define([
             var template;
 
             switch (this.get('type')) {
-                case 'content_aside':
+                case 'aside':
                     template = AsideTpl;
                     break;
-                case 'content_audio':
+                case 'audio':
                     template = AudioTpl;
                     break;
-                case 'content_featured_post':
+                case 'featured_post':
                     template = FeaturedPostTpl;
                     break;
-                case 'content_gallery':
+                case 'gallery':
                     template = GalleryTpl;
                     break;
-                case 'content_image':
+                case 'image':
                     template = ImageTpl;
                     break;
-                case 'content_link':
+                case 'link':
                     template = LinkTpl;
                     break;
-                case 'content_none':
+                case 'none':
                     template = NoneTpl;
                     break;
-                case 'content_page':
+                case 'page':
                     template = PageTpl;
                     break;
-                case 'content_quote':
+                case 'quote':
                     template = QuoteTpl;
                     break;
-                case 'content_video':
+                case 'video':
                     template = VideoTpl;
                     break;
-                case 'content_post':
+                case 'post':
                 default:
                     template = PostTpl;
                     break;

@@ -2,7 +2,7 @@
 
 <?php if (is_home()) { ?>
 
-<h1>REDBEE</h1>
+<h1>SITE</h1>
 
 <?php
 	if (have_posts()):
@@ -21,7 +21,7 @@
     get_header('navigation');
 ?>  
 
-<h1>REDBEE: Category page</h1>
+<h1>SITE: Category page</h1>
 
 <?php
 	if ( have_posts() ) :

@@ -8,10 +8,12 @@ define([
 
     var FooterView = Backbone.View.extend({
 
-        el: $('.footer'),
+        el: $('#mainFooter'),
 
         initialize: function(params) {
-            this.options = params.options || {};
+            if (params) {
+                this.options = params.options || {};   
+            }
             this.render();
         },
 

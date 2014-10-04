@@ -4,24 +4,30 @@ define([
     'backbone',
     'app/views/partials/header',
     'app/views/partials/footer',
+    'app/views/pages/home',
+    'app/collections/contents',
     'config'
-], function($, _, Backbone, HeaderView, FooterView, Config) {
+], function($, _, Backbone, HeaderView, FooterView, HomePage, ContentCollection, Config) {
 
     var MainPageView = Backbone.View.extend({
 
         el: $('#mainContainer'),
 
-        initialize: function() {
+        initialize: function () {
+            new HeaderView();
+            new FooterView();
+            new HomePage();
 
-            //TODO: cargar Header
-            //TODO: cargar Footer
-            //TODO: hookear vista al index.php principal
-
-            //TODO: fetch de los posts para la seccion de blog (deberia estar en otra vista principal separada)
-            this.render();
+            //Test wp-json API
+            this.col = new ContentCollection();
+            this.col.fetch({
+                success: function (response) {
+                    console.log('ContentCollection fetched', response);
+                }
+            });
         },
-        render: function() {
-            this.$el.html('<h1>contenido insertado por el render del MainPageView.</h1>');
+        render: function () {
+            //do nothing
         }
 
     });

@@ -8,10 +8,12 @@ define([
 
     var Header = Backbone.View.extend({
 
-        el: $('.header'),
+        el: $('#mainHeader'),
 
         initialize: function(params) {
-            this.options = params.options || {};
+            if (params) {
+                this.options = params.options || {};   
+            }
             this.render();
         },
 
