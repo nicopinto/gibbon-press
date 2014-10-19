@@ -16,6 +16,31 @@ define([
 
     var ContentModel = Backbone.Model.extend({
 
+        getThumbnail: function() {
+            //TODO: implement same functionality than WP in PHP --> 'twentyfourteen_post_thumbnail'
+            return '';
+        },
+
+        getClassAttr: function() {
+            //TODO: implement same functionality than --> 'post_class'
+            return '';
+        },
+
+        getTitle: function() {
+            //TODO: implement same functionality than --> 'the_title'
+            return this.get('post_title');
+        },
+
+        getContent: function() {
+            //TODO: implement same functionality than --> 'the_content'
+            return this.get('post_content');
+        },
+
+        getExcerpt: function() {
+            //TODO: implement same functionality than --> 'the_excerpt'
+            return this.get('post_excerpt');
+        },
+
         getTemplate: function() {
             var template;
 

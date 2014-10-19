@@ -6,8 +6,9 @@ define([
     'app/views/partials/footer',
     'app/views/pages/home',
     'app/collections/contents',
+    'helpers/wp',
     'config'
-], function($, _, Backbone, HeaderView, FooterView, HomePage, ContentCollection, Config) {
+], function($, _, Backbone, HeaderView, FooterView, HomePage, ContentCollection, WPHelper, Config) {
 
     var MainPageView = Backbone.View.extend({
 

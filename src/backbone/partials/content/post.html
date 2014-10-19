@@ -1,0 +1,22 @@
+<article id="post-<%= content.get('id') %>" <%= content.getClassAttr() %>>
+	<%= content.getThumbnail() %>
+
+	<header class="entry-header">
+		<h1 class="entry-title"><%= content.getTitle() %></h1>
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<%= content.getContent() %>
+	</div>
+
+	<% if ( is_search() ) { %>
+	<div class="entry-summary">
+		<%= content.getExcerpt() %>
+	</div><!-- .entry-summary -->
+	<% }else{ %>
+	<div class="entry-content">
+		<%= content.getContent() %>
+	</div><!-- .entry-content -->
+	<% } %>
+
+</article><!-- #post-## -->
