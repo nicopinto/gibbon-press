@@ -5,3 +5,4 @@ public
 .DS_Store
 .idea
 .sass-cache
+npm-debug.log
