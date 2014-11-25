@@ -1,8 +1,8 @@
 {
   "name": "theme-name",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "main.js",
-  "repository": "https://github.com/nicopinto/wp-spa-boilerplate",
+  "repository": "https://github.com/nicopinto/gibbon-press",
   "author": "Nico Pinto",
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -15,12 +15,8 @@
     "grunt-contrib-compass": "~0.6.0",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-uglify": "^0.5.0"
-  },
-  "dependencies": {
-    "backbone": "^1.1.2",
-    "jquery": "^1.11.1",
-    "requirejs": "~2.1.9",
-    "underscore": "^1.7.0"
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-bower": "^0.16.0"
   }
 }

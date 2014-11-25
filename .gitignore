@@ -1,4 +1,5 @@
 node_modules
+bower_components
 public/wp-content/themes/theme-name
 public
 !public/readme.md
