@@ -5,10 +5,16 @@
 * Note that we used reference to ./module.js to attach component to its module.
 */
 
-var controllers = angular.module('app.controllers', []);
+// var controllers = angular.module('app.controllers', []);
 
-controllers.controller('Home', function ($scope, $routeParams, PostService) {
+// angular.module('app')
+app
+  .controller('HomeController', function ($scope, $routeParams, PostService) {
 
-  'use strict';
+    console.log('HomeController');
 
-});
+    PostService.get(function(err, data) {
+      console.log('PostService.get', data);
+    }, {});
+
+  });

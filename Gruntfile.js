@@ -53,6 +53,7 @@ module.exports = function (grunt) {
 
       angular_dev: {
         options: {
+          mangle: false,
           beautify: {
             width: 80,
             beautify: true
@@ -83,11 +84,12 @@ module.exports = function (grunt) {
 
     concat: {
       angular_dev: {
-        src: [targetDir + '/js/temp/app.js', targetDir + '/js/temp/lib/**/*.js', targetDir + '/js/temp/controllers/**/*.js', targetDir + '/js/temp/directives/**/*.js', targetDir + '/js/temp/filters/**/*.js', targetDir + '/js/temp/services/**/*.js', targetDir + '/js/temp/app.js'],
+        //src: [targetDir + '/js/temp/app.js', targetDir + '/js/temp/lib/**/*.js', targetDir + '/js/temp/controllers/**/*.js', targetDir + '/js/temp/directives/**/*.js', targetDir + '/js/temp/filters/**/*.js', targetDir + '/js/temp/services/**/*.js', targetDir + '/js/temp/app.js'],
+        src: [targetDir + '/js/temp/app.js', targetDir + '/js/temp/controllers/**/*.js', targetDir + '/js/temp/directives/**/*.js', targetDir + '/js/temp/filters/**/*.js', targetDir + '/js/temp/services/**/*.js'],
         dest: targetDir + '/js/ng-app.js'
       },
       angular_prod: {
-        src: [targetDir + '/js/temp/app.js', targetDir + '/js/temp/lib/**/*.js', targetDir + '/js/temp/controllers/**/*.js', targetDir + '/js/temp/directives/**/*.js', targetDir + '/js/temp/filters/**/*.js', targetDir + '/js/temp/services/**/*.js', targetDir + '/js/temp/app.js'],
+        src: [targetDir + '/js/temp/app.js', targetDir + '/js/temp/controllers/**/*.js', targetDir + '/js/temp/directives/**/*.js', targetDir + '/js/temp/filters/**/*.js', targetDir + '/js/temp/services/**/*.js'],
         dest: targetDir + '/js/ng-app.min.js'
       }
     },
@@ -99,7 +101,7 @@ module.exports = function (grunt) {
       },
       angularjs: {
         files: ['src/angular/js/**/*.js', '!src/angular/js/lib/**/*.js', 'src/angular/php/*.php', 'src/angular/partials/**/*.html'],
-        tasks: ['copy:angular', 'uglify']
+        tasks: ['copy:angular', 'uglify:angular_dev', 'concat:angular_dev', 'clean:temp']
       },
       php: {
         files: ['src/_php/*.php'],
@@ -183,13 +185,41 @@ module.exports = function (grunt) {
             dest: targetDir + '/'
           },
 
-          // includes files within path and its sub-directories
+          //javascript
+          {
+            expand: true,
+            cwd: 'bower_components/jquery/dist/',
+            src: [ '*.js', '*.map' ],
+            dest: targetDir + '/js/lib/jquery/'
+          },
+          {
+            expand: true,
+            cwd: 'src/angular/js/lib/',
+            src: ['**/*.js'],
+            dest: targetDir + '/js/lib/'
+          },
+          {
+            src: [ 'bower_components/angular/angular.js' ],
+            dest: targetDir + '/js/lib/angular.js'
+          },
+          {
+            src: [ 'bower_components/angular-route/angular-route.js' ],
+            dest: targetDir + '/js/lib/angular-route.js'
+          },
           {
             expand: true,
             cwd: 'src/angular/js/',
-            src: ['**/*.js'],
+            src: ['globals.js'],
             dest: targetDir + '/js/'
           },
+
+          // includes files within path and its sub-directories
+          // {
+          //   expand: true,
+          //   cwd: 'src/angular/js/',
+          //   src: ['**/*.js'],
+          //   dest: targetDir + '/js/'
+          // },
 
           //html partial templates
           {
@@ -197,16 +227,6 @@ module.exports = function (grunt) {
             cwd: 'src/angular/partials/',
             src: ['**/*.html'],
             dest: targetDir + '/js/partials/'
-          },
-
-          //libs
-          {
-            src: [ 'bower_components/requirejs/require.js' ],
-            dest: targetDir + '/js/lib/require/require.js'
-          },
-          {
-            src: [ 'bower_components/angular/angular.js' ],
-            dest: targetDir + '/js/lib/angular.js'
           }
         ]
       },
@@ -286,7 +306,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('basic', ['clean:main', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:basic', 'requirejs']);
   grunt.registerTask('backbone', ['clean:main', 'compass', 'copy:assets', 'copy:theme', 'copy:backbone']);
-  grunt.registerTask('angular', ['clean:main', 'compass', 'copy:assets', 'copy:theme', 'uglify:angular_dev', 'concat:angular_dev', 'clean:temp']);
+  grunt.registerTask('angular', ['clean:main', 'compass', 'copy:assets', 'copy:theme', 'copy:angular', 'uglify:angular_dev', 'concat:angular_dev', 'clean:temp']);
   grunt.registerTask('angular:prod', ['clean:main', 'compass', 'copy:assets', 'copy:theme', 'uglify:angular_prod', 'concat:angular_prod', 'clean:temp']);
 
   grunt.registerTask('build', ['clean:main', 'compass', 'copy:assets', 'copy:theme', 'jshint', 'copy:backbone', 'requirejs']);

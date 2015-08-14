@@ -26,26 +26,16 @@ class SinglePageApplicationTheme {
       wp_register_script('jquery-custom', get_stylesheet_directory_uri() . '/js/lib/jquery/jquery-migrate-1.2.1.min.js', array('jquery-base'), '', false);
 
       wp_register_script('js-globals', get_stylesheet_directory_uri() . '/js/globals.js', array(), '', false);
+      
       wp_register_script('ng', get_stylesheet_directory_uri() . '/js/lib/angular.js', array(), '', true);
       wp_register_script('ng-route', get_stylesheet_directory_uri() . '/js/lib/angular-route.js', array(), '', true);
-
       wp_register_script('mapbox', get_stylesheet_directory_uri() . '/js/lib/mapbox/mapbox.js', array(), '', true);
       wp_register_script('slick', get_stylesheet_directory_uri() . '/js/lib/slick/slick.js', array(), '', true);
 
-      wp_register_script('ng-config', get_stylesheet_directory_uri() . '/js/app.js', array('ng', 'ng-route', 'mapbox', 'slick'), '', true);
-
-      wp_register_script('ng-ctrl', get_stylesheet_directory_uri() . '/js/controllers/home.js', array('ng-config'), '', true);
-
-      wp_register_script('ng-serv', get_stylesheet_directory_uri() . '/js/services/post-service.js', array('ng-ctrl'), '', true);
-
-      //wp_register_script('ng-filt-1', get_stylesheet_directory_uri() . '/js/filters/my-filter-1.js', array('ng-serv-last'), '', true);
-
-      wp_register_script('ng-dire-1', get_stylesheet_directory_uri() . '/js/directives/slick-base.js', array('ng-serv'), '', true);
-      wp_register_script('ng-app', get_stylesheet_directory_uri() . '/js/directives/slick-team.js', array('ng-dire-1'), '', true);
-
+      wp_register_script('ng-app', get_stylesheet_directory_uri() . '/js/ng-app.js', array('ng', 'ng-route', 'mapbox', 'slick'), '', true);
       
       //PROD
-      //wp_register_script('main', get_stylesheet_directory_uri() . '/js/compiled.js', array('requirejs-config'), '', true);
+      //wp_register_script('ng-app', get_stylesheet_directory_uri() . '/js/ng-app.min.js', array('requirejs-config'), '', true);
       
       add_action( 'wp_enqueue_scripts', array($this, 'enqueueScript'));
     }else {

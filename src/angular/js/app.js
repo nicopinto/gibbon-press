@@ -1,24 +1,21 @@
-//'use strict';
+'use strict';
 
-angular.module('app', [
-  'ngRoute',
-  'app.controllers',
-  'app.services',
-  //'app.filters',
-  'app.directives'
-]).config(function ($routeProvider) {
+var app = angular.module('app', ['ngRoute']);
 
-  $routeProvider.when('/:section?', {
-    templateUrl: globals.baseUrl + '/js/partials/home.html',
-    controller: 'Home',
-    reloadOnSearch: false
+app
+  .config(function ($routeProvider) {
+
+    $routeProvider.when('/:section?', {
+      templateUrl: globals.baseUrl + '/js/partials/home.html',
+      controller: 'HomeController',
+      reloadOnSearch: false
+    });
+
+    $routeProvider.otherwise({
+      redirectTo: '/'
+    });
+
   });
-
-  $routeProvider.otherwise({
-    redirectTo: '/'
-  });
-
-});
 
 /*var underscore = angular.module('underscore', []);
 underscore.factory('_', function() {
